@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="titulo">
+    <h3 class="text-center text-primary">Categorias</h3>
+    <button class="btn btn-info btn-sm pull-right" (click)="criar()" data-toggle="modal" data-target="#Modal"><i class="fa fa-plus"></i> Add</button>
+  </div>
+  <div class="corpo">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of elementos">
+          <td>{{e.id}}</td>
+          <td>{{e.nome}}</td>
+          <td>{{e.descricao}}</td>
+          <td class="text-right">
+              <button class="btn btn-info btn-sm" (click)="editar(e)" data-toggle="modal" data-target="#Modal"><i class="fa fa-pencil"></i></button>
+              <button class="btn btn-danger btn-sm" (click)="remover(e)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Criar/Editar Categoria</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #f="ngForm" >
+        <div class="modal-body">
+          <div class="form-group">
+            
+              <input type="hidden" class="form-control" name="id" [(ngModel)]="elem.id"> 
+              <label>Nome</label>
+              <input type="text" class="form-control" name="nome" [(ngModel)]="elem.nome">
+              <label>Descrição</label>
+              <textarea rows="2" class="form-control" name="descricao" [(ngModel)]="elem.descricao"></textarea>
+            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary" (click)="save(elem)" data-dismiss="modal">Guardar</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>

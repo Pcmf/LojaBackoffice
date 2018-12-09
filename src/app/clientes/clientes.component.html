@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="titulo">
+    <h3 class="text-center text-primary">Clientes</h3>
+    <button class="btn btn-info btn-sm pull-right" (click)="criar()" data-toggle="modal" data-target="#Modal"><i class="fa fa-plus"></i>
+      Add</button>
+  </div>
+  <div class="corpo">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>Email</th>
+          <th>NIF</th>
+          <th>Tipo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of elementos">
+          <td>{{e.id}}</td>
+          <td>{{e.nome}}</td>
+          <td>{{e.telefone}}</td>
+          <td>{{e.email}}</td>
+          <td>{{e.nif}}</td>
+          <td>{{e.tipo}}</td>
+          <td class="text-right">
+            <button class="btn btn-info btn-sm" (click)="editar(e)" data-toggle="modal" data-target="#Modal"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-danger btn-sm" (click)="remover(e)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Criar/Editar Cliente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #f="ngForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <input type="hidden" class="form-control" name="id" [(ngModel)]="elem.id">
+              <label>Tipo</label>
+              <select class="custom-select" name="tipo" [(ngModel)]="elem.tipo">
+                  <option selected>...</option>
+                  <option value="1">Publico</option>
+                  <option value="2">Revenda</option>
+              </select>
+              <label>Nome</label>
+              <input type="text" class="form-control" name="nome" [(ngModel)]="elem.nome">
+              <label>Telefone</label>
+              <input type="text" class="form-control" name="telefone" [(ngModel)]="elem.telefone">
+              <label>NIF</label>
+              <input type="text" class="form-control" name="nif" [(ngModel)]="elem.nif">
+              <label>Email</label>
+              <input type="email" class="form-control" name="email" [(ngModel)]="elem.email">
+              <label>Rua</label>
+              <input type="text" class="form-control" name="moradarua" [(ngModel)]="elem.moradarua">
+              <label>Localidade</label>
+              <input type="text" class="form-control" name="moradalocalidade" [(ngModel)]="elem.moradalocalidade">
+              <label>Codigo Postal</label>
+              <input type="text" class="form-control" name="moradacp" [(ngModel)]="elem.moradacp">
+              <label>Pais</label>
+              <input type="text" class="form-control" name="moradapais" [(ngModel)]="elem.moradapais">
+              <label>Codigo de utilizador</label>
+              <input type="text" class="form-control" name="username" [(ngModel)]="elem.username">
+              <label>Password</label>
+              <input type="password" class="form-control" name="pass" [(ngModel)]="elem.pass">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" (click)="save(elem)" data-dismiss="modal">Guardar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

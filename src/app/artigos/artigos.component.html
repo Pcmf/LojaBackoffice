@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="titulo">
+    <h3 class="text-center text-primary">Artigos</h3>
+    <button class="btn btn-info btn-sm pull-right" (click)="criar()" data-toggle="modal" data-target="#Modal"><i class="fa fa-plus"></i>
+      Add</button>
+  </div>
+  <div class="table-sm">
+    <table class="table table-condensed table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Id</th>
+          <th>Artigo</th>
+          <th>Familia</th>
+          <th>Categoria</th>
+          <th>Fornecedor</th>
+          <th>Imagem</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of elementos">
+          <th>{{a.id}}</th>
+          <th>{{a.nome}}</th>
+          <th>{{a.nomefamilia}}</th>
+          <th>{{a.nomecategoria}}</th>
+          <th>{{a.empresa}}</th>
+          <th>{{a.fotografias}}</th>
+          <th class="pull-right">
+              <button class="btn btn-info btn-sm" (click)="editar(a)" data-toggle="modal" data-target="#Modal">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="remover(a)">
+                <i class="fa fa-trash"></i>
+              </button>            
+          </th>                              
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Criar/Editar Artigo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #f="ngForm">
+            <div class="modal-body">
+              <div class="form-group">
+                <input type="hidden" class="form-control" name="id" [(ngModel)]="elem.id">
+                <label>Artigo</label>
+                <input type="text" class="form-control" name="nome" [(ngModel)]="elem.nome">
+                <label>Descrição</label>
+                <textarea rows="2" class="form-control" name="descricao" [(ngModel)]="elem.descricao"></textarea>
+                <label>Familia</label>
+                <select class="custom-select" name="familia" [(ngModel)]="elem.familia">
+                    <option selected>...</option>
+                    <option value="1">Familia 1</option>
+                    <option value="2">Familia 2</option>
+                </select>
+                <label>Categoria</label>
+                <select class="custom-select" name="categoria" [(ngModel)]="elem.categoria">
+                    <option selected>...</option>
+                    <option value="1">categoria 1</option>
+                    <option value="2">categoria 2</option>
+                </select>
+                <label>Fornecedor</label>
+                <select class="custom-select" name="fornecedor" [(ngModel)]="elem.fornecedor">
+                    <option selected>...</option>
+                    <option value="1">fornecedor 1</option>
+                    <option value="2">fornecedor 2</option>
+                </select>
+                <label>Referencia do fornecedor</label>
+                <input type="text" class="form-control" name="reffornecedor" [(ngModel)]="elem.reffornecedor">  
+                <label>Preço de Compra</label>
+                <input type="number" class="form-control" name="precocompra" [(ngModel)]="elem.precocompra">                  
+                <label>Preço Venda Publico</label>
+                <input type="number" class="form-control" name="pvp" [(ngModel)]="elem.pvp"> 
+                <label>Preço de Revenda</label>
+                <input type="number" class="form-control" name="precorevenda" [(ngModel)]="elem.precorevenda">                                               
+                <label>Imagem</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" name="fotografias" [(ngModel)]="elem.fotografias" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                  </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary" (click)="save(elem)" data-dismiss="modal">Guardar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
