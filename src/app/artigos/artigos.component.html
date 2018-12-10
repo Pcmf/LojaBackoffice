@@ -84,7 +84,12 @@
                 <label>Preço de Revenda</label>
                 <input type="number" class="form-control" name="precorevenda" [(ngModel)]="elem.precorevenda">                                               
                 <label>Imagem</label>
-                <div class="input-group mb-3">
+                <div class="image-upload">
+                    <img [src]="imageSrc" style="max-width:300px;max-height:300px"/>
+                    <input name="imageUrl" type="file" accept="image/*" (change)="handleInputChange($event)" />
+                </div> 
+                                
+               <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                     </div>
@@ -92,7 +97,7 @@
                       <input type="file" name="fotografias" [(ngModel)]="elem.fotografias" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                       <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                     </div>
-                  </div>
+                </div>
 
               </div>
             </div>

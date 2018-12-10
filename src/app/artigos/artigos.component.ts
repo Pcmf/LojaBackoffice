@@ -6,9 +6,10 @@ import { DadosService } from './../dados.service';
   templateUrl: './artigos.component.html',
   styleUrls: ['./artigos.component.scss']
 })
-export class ArtigosComponent implements OnInit {
+export class ArtigosComponent {
   private elementos: any = [];
   private elem: any = {};
+  private imageSrc = '';
   constructor(private dataService: DadosService) {
     this.dataService.getAll('artigos').subscribe(
       (resp: any) => {
@@ -17,7 +18,21 @@ export class ArtigosComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  handleInputChange(e) {
+    const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+    const pattern = /image-*/;
+    const reader = new FileReader();
+    if (!file.type.match(pattern)) {
+      alert('invalid format');
+      return;
+    }
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
+  _handleReaderLoaded(e) {
+    const reader = e.target;
+    this.imageSrc = reader.result;
+    console.log(this.imageSrc);
   }
 
   criar () {
@@ -32,15 +47,22 @@ export class ArtigosComponent implements OnInit {
       this.dataService.update('artigos', elem.id, elem).subscribe(
         resp => {
           this.dataService.getAll('artigos').subscribe(
-            respd => this.elementos = respd.json()
+            respd => {
+              this.elementos = respd.json();
+              this.elem = {};
+            }
           );
         }
       );
     } else {
+      elem.base64 = this.imageSrc;
       this.dataService.set('artigos', elem).subscribe(
         resp => {
           this.dataService.getAll('artigos').subscribe(
-            respd => this.elementos = respd.json()
+            respd => {
+              this.elementos = respd.json();
+              this.elem = {};
+            }
           );
         }
       );
