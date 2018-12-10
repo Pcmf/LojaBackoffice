@@ -24,7 +24,7 @@
           <th>{{a.nomefamilia}}</th>
           <th>{{a.nomecategoria}}</th>
           <th>{{a.empresa}}</th>
-          <th>{{a.fotografias}}</th>
+          <th><img [src]="a.base64" style="max-width:40px;max-height:60px"/></th>
           <th class="pull-right">
               <button class="btn btn-info btn-sm" (click)="editar(a)" data-toggle="modal" data-target="#Modal">
                 <i class="fa fa-pencil"></i>
@@ -60,20 +60,17 @@
                 <label>Familia</label>
                 <select class="custom-select" name="familia" [(ngModel)]="elem.familia">
                     <option selected>...</option>
-                    <option value="1">Familia 1</option>
-                    <option value="2">Familia 2</option>
+                    <option *ngFor="let f of familias" [value]="f.id">{{f.nome}}</option>
                 </select>
                 <label>Categoria</label>
                 <select class="custom-select" name="categoria" [(ngModel)]="elem.categoria">
                     <option selected>...</option>
-                    <option value="1">categoria 1</option>
-                    <option value="2">categoria 2</option>
+                    <option *ngFor="let c of categorias" [value]="c.id">{{c.nome}}</option>
                 </select>
                 <label>Fornecedor</label>
                 <select class="custom-select" name="fornecedor" [(ngModel)]="elem.fornecedor">
                     <option selected>...</option>
-                    <option value="1">fornecedor 1</option>
-                    <option value="2">fornecedor 2</option>
+                    <option *ngFor="let f of fornecedores" [value]="f.id">{{f.empresa}}</option>
                 </select>
                 <label>Referencia do fornecedor</label>
                 <input type="text" class="form-control" name="reffornecedor" [(ngModel)]="elem.reffornecedor">  
@@ -85,20 +82,10 @@
                 <input type="number" class="form-control" name="precorevenda" [(ngModel)]="elem.precorevenda">                                               
                 <label>Imagem</label>
                 <div class="image-upload">
-                    <img [src]="imageSrc" style="max-width:300px;max-height:300px"/>
-                    <input name="imageUrl" type="file" accept="image/*" (change)="handleInputChange($event)" />
+                    <img [src]="elem.base64" style="max-width:300px;max-height:300px"/>
+                    <input name="base64" [(ngModel)]="elem.base64"  type="file" accept="image/*" (change)="handleInputChange($event)" />
                 </div> 
                                 
-               <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                    </div>
-                    <div class="custom-file">
-                      <input type="file" name="fotografias" [(ngModel)]="elem.fotografias" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    </div>
-                </div>
-
               </div>
             </div>
             <div class="modal-footer">

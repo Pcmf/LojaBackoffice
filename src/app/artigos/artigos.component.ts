@@ -10,12 +10,30 @@ export class ArtigosComponent {
   private elementos: any = [];
   private elem: any = {};
   private imageSrc = '';
+  private familias: any[];
+  private fornecedores: any[];
+  private categorias: any[];
+
   constructor(private dataService: DadosService) {
     this.dataService.getAll('artigos').subscribe(
       (resp: any) => {
           this.elementos = resp.json();
       }
     );
+      // familias
+      this.dataService.getAll('familias').subscribe(
+        resp => this.familias = resp.json()
+      );
+
+      // categorias
+      this.dataService.getAll('categorias').subscribe(
+        resp => this.categorias = resp.json()
+      );
+      // fornecedores
+      this.dataService.getAll('fornecedores').subscribe(
+        resp => this.fornecedores = resp.json()
+      );
+
   }
 
   handleInputChange(e) {
@@ -32,7 +50,7 @@ export class ArtigosComponent {
   _handleReaderLoaded(e) {
     const reader = e.target;
     this.imageSrc = reader.result;
-    console.log(this.imageSrc);
+    this.elem.base64 = this.imageSrc;
   }
 
   criar () {
@@ -42,7 +60,6 @@ export class ArtigosComponent {
     this.elem = elem;
   }
   save (elem) {
-    console.log(elem);
     if (elem.id) {
       this.dataService.update('artigos', elem.id, elem).subscribe(
         resp => {
@@ -70,9 +87,9 @@ export class ArtigosComponent {
   }
 
   remover (elem) {
-    this.dataService.delete('clientes', elem.id).subscribe(
+    this.dataService.delete('artigos', elem.id).subscribe(
       resp => {
-        this.dataService.getAll('clientes').subscribe(
+        this.dataService.getAll('artigos').subscribe(
           respd => this.elementos = respd.json()
         );
       }
