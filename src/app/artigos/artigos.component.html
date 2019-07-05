@@ -8,7 +8,7 @@
     <table class="table table-condensed table-striped">
       <thead class="thead-dark">
         <tr>
-          <th>Id</th>
+          <th>Referencia</th>
           <th>Artigo</th>
           <th>Familia</th>
           <th>Categoria</th>
@@ -19,20 +19,26 @@
       </thead>
       <tbody>
         <tr *ngFor="let a of elementos">
-          <th>{{a.id}}</th>
-          <th>{{a.nome}}</th>
-          <th>{{a.nomefamilia}}</th>
-          <th>{{a.nomecategoria}}</th>
-          <th>{{a.empresa}}</th>
-          <th><img [src]="a.base64" style="max-width:40px;max-height:60px"/></th>
-          <th class="pull-right">
-              <button class="btn btn-info btn-sm" (click)="editar(a)" data-toggle="modal" data-target="#Modal">
+          <th>{{a.ref}}</th>
+          <td>{{a.nome}}</td>
+          <td>{{a.nomefamilia}}</td>
+          <td>{{a.nomecategoria}}</td>
+          <td>{{a.empresa}}</td>
+          <td><img [src]="a.base64" style="max-width:60px;max-height:80px"/></td>
+          <td class="pull-right">
+              <button class="btn btn-outline-info btn-sm" (click)="editar(a)" data-toggle="modal" data-target="#Modal">
                 <i class="fa fa-pencil"></i>
               </button>
-              <button class="btn btn-danger btn-sm" (click)="remover(a)">
+              <button class="btn btn-outline-primary btn-sm" (click)="fotos(a)" data-toggle="modal" title="Adicionar imagens extra" data-target="#ModalFotos">
+                <i class="fa fa-camera"></i>
+              </button> 
+              <button class="btn btn-outline-primary btn-sm" (click)="stock(a)" data-toggle="modal" title="Stock" data-target="#ModalStock">
+                <i class="fa fa-building"></i>
+              </button>              
+              <button class="btn btn-outline-danger btn-sm" (click)="openAlertModal(a)" data-toggle="modal" data-target="#alertModal">
                 <i class="fa fa-trash"></i>
               </button>            
-          </th>                              
+          </td>                              
         </tr>
       </tbody>
     </table>
@@ -41,7 +47,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalCenterTitle">Criar/Editar Artigo</h5>
@@ -51,43 +57,78 @@
         </div>
         <form #f="ngForm">
             <div class="modal-body">
-              <div class="form-group">
-                <input type="hidden" class="form-control" name="id" [(ngModel)]="elem.id">
-                <label>Artigo</label>
-                <input type="text" class="form-control" name="nome" [(ngModel)]="elem.nome">
-                <label>Descrição</label>
-                <textarea rows="2" class="form-control" name="descricao" [(ngModel)]="elem.descricao"></textarea>
-                <label>Familia</label>
-                <select class="custom-select" name="familia" [(ngModel)]="elem.familia">
-                    <option selected>...</option>
-                    <option *ngFor="let f of familias" [value]="f.id">{{f.nome}}</option>
-                </select>
-                <label>Categoria</label>
-                <select class="custom-select" name="categoria" [(ngModel)]="elem.categoria">
-                    <option selected>...</option>
-                    <option *ngFor="let c of categorias" [value]="c.id">{{c.nome}}</option>
-                </select>
-                <label>Fornecedor</label>
-                <select class="custom-select" name="fornecedor" [(ngModel)]="elem.fornecedor">
-                    <option selected>...</option>
-                    <option *ngFor="let f of fornecedores" [value]="f.id">{{f.empresa}}</option>
-                </select>
-                <label>Referencia do fornecedor</label>
-                <input type="text" class="form-control" name="reffornecedor" [(ngModel)]="elem.reffornecedor">  
-                <label>Preço de Compra</label>
-                <input type="number" class="form-control" name="precocompra" [(ngModel)]="elem.precocompra">                  
-                <label>Preço Venda Publico</label>
-                <input type="number" class="form-control" name="pvp" [(ngModel)]="elem.pvp"> 
-                <label>Preço de Revenda</label>
-                <input type="number" class="form-control" name="precorevenda" [(ngModel)]="elem.precorevenda">                                               
-                <label>Imagem</label>
-                <div class="image-upload">
-                    <img [src]="elem.base64" style="max-width:300px;max-height:300px"/>
-                    <input name="base64" [(ngModel)]="elem.base64"  type="file" accept="image/*" (change)="handleInputChange($event)" />
-                </div> 
-                                
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="form-group col-md-3 ">
+                      <input type="hidden" class="form-control" name="id" [(ngModel)]="elem.id">
+                      <label>Artigo</label>
+                      <input type="text" class="form-control" name="nome" [(ngModel)]="elem.nome">
+                  </div>
+                  <div class="form-group col-md-3 ">
+                      <label>Referencia</label>
+                      <input type="text" class="form-control" name="ref" [(ngModel)]="elem.ref">
+                  </div>
+                  <div class="form-group col-md-3 ">
+                      <label>Familia</label>
+                      <select class="custom-select" name="familia" [(ngModel)]="elem.familia">
+                          <option selected>...</option>
+                          <option *ngFor="let f of familias" [value]="f.id">{{f.nome}}</option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-3 ">
+                      <label>Categoria</label>
+                      <select class="custom-select" name="categoria" [(ngModel)]="elem.categoria">
+                          <option selected>...</option>
+                          <option *ngFor="let c of categorias" [value]="c.id">{{c.nome}}</option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-12">
+                      <label>Descrição</label>
+                      <textarea rows="2" class="form-control" name="descricao" [(ngModel)]="elem.descricao"></textarea>
+                  </div>
+                  <div class="form-group col-md-4 ">
+                      <label>Fornecedor</label>
+                      <select class="custom-select" name="fornecedor" [(ngModel)]="elem.fornecedor">
+                          <option selected>...</option>
+                          <option *ngFor="let f of fornecedores" [value]="f.id">{{f.empresa}}</option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-4">                  
+                      <label>Ref Fornecedor</label>
+                      <input type="text" class="form-control" name="reffornecedor" [(ngModel)]="elem.reffornecedor">  
+                  </div>
+                  <div class="form-group col-md-4">                  
+                    <label>Composição</label>
+                    <select class="custom-select" name="composicao" [(ngModel)]="elem.composicao">
+                      <option selected>...</option>
+                      <option *ngFor="let c of composicoes" [value]="c.id">{{c.composicao}}</option>
+                  </select>
+                  </div>
+                </div>
+                <div class=form-row>
+                  <div class="form-group col-md-2">
+                      <label>Preço de Compra</label>
+                      <input type="number" class="form-control" name="precocompra" [(ngModel)]="elem.precocompra"> 
+                  </div>
+                  <div class="form-group col-md-2">
+                      <label>Preço Venda Publico</label>
+                      <input type="number" class="form-control" name="pvp" [(ngModel)]="elem.pvp"> 
+                  </div>
+                  <div class="form-group col-md-2 ">
+                      <label>Preço de Revenda</label>
+                      <input type="number" class="form-control" name="precorevenda" [(ngModel)]="elem.precorevenda">   
+                  </div>
+                  <div class="form-group col-md-12">
+                      <label>Imagem</label>
+                      <div class="image-upload">
+                          <img [src]="elem.base64"  style="max-width:300px;max-height:300px"/>
+                          <input name="base64" [(ngModel)]="elem.base64"  type="file" accept="image/*" (change)="handleInputChange($event)" />
+                      </div> 
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+              
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
               <button type="submit" class="btn btn-primary" (click)="save(elem)" data-dismiss="modal">Guardar</button>
@@ -97,3 +138,72 @@
     </div>
   </div>
 
+
+<!-- Modal Stock-->
+<div class="modal fade" id="ModalStock" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Stock do Artigo: {{elem.ref}} - {{elem.nome}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <app-stock *ngIf="stocks"  [artigo] = "elem" [stocks] = "stocks"></app-stock>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal  Alertas-->
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Atenção</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Vai anular este artigo. Pretende continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+        <button type="button" class="btn btn-primary" (click)="remover(a)" data-dismiss="modal">Sim</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal para adicionar fotos-->
+<div class="modal fade" id="ModalFotos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Imagens para o artigo: {{elem.ref}} - {{elem.nome}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #f="ngForm">
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                   <label>Imagens</label>
+                    <div class="image-upload">
+                        <img [src]="elem.base64_2"  style="max-width:200px;max-height:200px"/>
+                        <input name="base64_2" [(ngModel)]="elem.base64_2"  type="file" accept="image/*" (change)="handleInputChange2($event)" />
+                    </div> 
+                  </div>
+                </div>
+          </div>
+
+            
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary" (click)="saveFotos(elem)" data-dismiss="modal">Guardar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

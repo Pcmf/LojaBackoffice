@@ -1,3 +1,53 @@
-<p>
-  stock works!
-</p>
+<div class="container">
+  <div class="corpo">
+    <div class="table-sm">
+      <div class="text-right">
+        <button class="btn btn-info" (click)="addLinha()"><i class="fa fa-plus"></i> Add</button>
+      </div>
+      <table class="table table-condensed table-striped">
+        <thead class="thead-dark">
+          <tr>
+              <th>Cor</th>
+              <th>Tamanho</th>
+              <th>Quantidade</th>
+              <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let s of stocks">
+            <td>{{s.nomecor}}</td>
+            <td>{{s.nometamanho}}</td>
+            <td>
+              <input class="" type="number" name="qty" [(ngModel)]="s.qty" (blur)="guardaLinha(s)">
+            </td>
+            <td>
+              <button class="btn btn-outline-danger btn-sm" (click)="removeLinha(s)"><i class="fa fa-trash"></i></button> 
+            </td>
+          </tr>
+          <!-- Nova linha-->
+          <tr *ngIf="linhaNova"> 
+            <td>
+              <select class="form-control" name="scor" #scor [(ngModel)]="linha.cor">
+                <option>...</option>
+                <option *ngFor="let c of cores" [value]="c.id">{{c.nomecor}}</option>
+              </select>
+            </td>
+            <td>
+                <select class="form-control" name="tamanho" [(ngModel)]="linha.tamanho">
+                  <option>...</option>
+                  <option *ngFor="let tam of tamanhos" [value]="tam.id">{{tam.tamanho}}</option>
+                </select>
+            </td> 
+            <td>
+                <input class="form-control" type="number" name="qty" [(ngModel)]="linha.qty">
+            </td>
+            <td>
+              <button class="btn btn-outline-success btn-sm" (click)="novaLinha(linha)"><i class="fa fa-check"></i></button> 
+              <button class="btn btn-outline-danger btn-sm" (click)="removeLinha()"><i class="fa fa-trash"></i></button> 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
