@@ -12,7 +12,7 @@ export class CoresComponent implements OnInit {
   constructor(private dataService: DadosService) {
     this.dataService.getAll('cores').subscribe(
       (resp: any) => {
-          this.elementos = resp.json();
+          this.elementos = resp;
       }
     );
    }
@@ -33,7 +33,7 @@ export class CoresComponent implements OnInit {
     this.dataService.delete('cores', elem.id).subscribe(
       resp => {
         this.dataService.getAll('cores').subscribe(
-          respd => this.elementos = respd.json()
+          respd => this.elementos = respd
         );
       }
     );
@@ -44,7 +44,7 @@ export class CoresComponent implements OnInit {
       this.dataService.update('cores', elem.id, elem).subscribe(
         resp => {
           this.dataService.getAll('cores').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );
@@ -52,7 +52,7 @@ export class CoresComponent implements OnInit {
       this.dataService.set('cores', elem).subscribe(
         resp => {
           this.dataService.getAll('cores').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );

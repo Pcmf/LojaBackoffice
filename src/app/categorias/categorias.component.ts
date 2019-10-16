@@ -12,7 +12,7 @@ export class CategoriasComponent implements OnInit {
   constructor(private dataService: DadosService) {
     this.dataService.getAll('categorias').subscribe(
       (resp: any) => {
-          this.elementos = resp.json();
+          this.elementos = resp;
       }
     );
    }
@@ -33,7 +33,7 @@ export class CategoriasComponent implements OnInit {
     this.dataService.delete('categorias', elem.id).subscribe(
       resp => {
         this.dataService.getAll('categorias').subscribe(
-          respd => this.elementos = respd.json()
+          respd => this.elementos = respd
         );
       }
     );
@@ -44,7 +44,7 @@ export class CategoriasComponent implements OnInit {
       this.dataService.update('categorias', elem.id, elem).subscribe(
         resp => {
           this.dataService.getAll('categorias').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );
@@ -52,7 +52,7 @@ export class CategoriasComponent implements OnInit {
       this.dataService.set('categorias', elem).subscribe(
         resp => {
           this.dataService.getAll('categorias').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );

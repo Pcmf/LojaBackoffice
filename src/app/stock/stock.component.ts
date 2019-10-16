@@ -18,11 +18,11 @@ export class StockComponent  {
   constructor(private dataService: DadosService, private router: Router) {
     // Carregar lista de cores
     this.dataService.getAll('cores').subscribe(
-      resp => this.cores = resp.json()
+      resp => this.cores = resp
     );
   // Carregar lista de tamanhos
     this.dataService.getAll('tamanhos').subscribe(
-      resp => this.tamanhos = resp.json()
+      resp => this.tamanhos = resp
     );
 
     this.linha  = {'artigo': '', 'cor': '', 'tamanho': '', 'qty': 0}
@@ -30,7 +30,7 @@ export class StockComponent  {
 
   carregaDados () {
     this.dataService.getOne('stock', this.artigo.id).subscribe(
-      resp => this.stocks = resp.json()
+      resp => this.stocks = resp
     );
   }
 

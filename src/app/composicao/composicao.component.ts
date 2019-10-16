@@ -13,7 +13,7 @@ export class ComposicaoComponent implements OnInit {
     constructor(private dataService: DadosService) {
       this.dataService.getAll('composicoes').subscribe(
         (resp: any) => {
-            this.elementos = resp.json();
+            this.elementos = resp;
         }
       );
      }
@@ -34,7 +34,7 @@ export class ComposicaoComponent implements OnInit {
       this.dataService.delete('composicoes', elem.id).subscribe(
         resp => {
           this.dataService.getAll('composicoes').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );
@@ -45,7 +45,7 @@ export class ComposicaoComponent implements OnInit {
         this.dataService.update('composicoes', elem.id, elem).subscribe(
           resp => {
             this.dataService.getAll('composicoes').subscribe(
-              respd => this.elementos = respd.json()
+              respd => this.elementos = respd
             );
           }
         );
@@ -53,7 +53,7 @@ export class ComposicaoComponent implements OnInit {
         this.dataService.set('composicoes', elem).subscribe(
           resp => {
             this.dataService.getAll('composicoes').subscribe(
-              respd => this.elementos = respd.json()
+              respd => this.elementos = respd
             );
           }
         );

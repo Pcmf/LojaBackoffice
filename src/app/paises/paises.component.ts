@@ -12,7 +12,7 @@ export class PaisesComponent implements OnInit {
   constructor(private dataService: DadosService) {
     this.dataService.getAll('paises').subscribe(
       (resp: any) => {
-          this.elementos = resp.json();
+          this.elementos = resp;
       }
     );
    }
@@ -33,7 +33,7 @@ export class PaisesComponent implements OnInit {
     this.dataService.delete('paises', elem.id).subscribe(
       resp => {
         this.dataService.getAll('paises').subscribe(
-          respd => this.elementos = respd.json()
+          respd => this.elementos = respd
         );
       }
     );
@@ -44,7 +44,7 @@ export class PaisesComponent implements OnInit {
       this.dataService.update('paises', elem.id, elem).subscribe(
         resp => {
           this.dataService.getAll('paises').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );
@@ -52,7 +52,7 @@ export class PaisesComponent implements OnInit {
       this.dataService.set('paises', elem).subscribe(
         resp => {
           this.dataService.getAll('paises').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );

@@ -12,7 +12,7 @@ export class TipoClienteComponent implements OnInit {
   constructor(private dataService: DadosService) {
     this.dataService.getAll('tipocliente').subscribe(
       (resp: any) => {
-          this.elementos = resp.json();
+          this.elementos = resp;
       }
     );
    }
@@ -33,7 +33,7 @@ export class TipoClienteComponent implements OnInit {
     this.dataService.delete('tipocliente', elem.id).subscribe(
       resp => {
         this.dataService.getAll('tipocliente').subscribe(
-          respd => this.elementos = respd.json()
+          respd => this.elementos = respd
         );
       }
     );
@@ -44,7 +44,7 @@ export class TipoClienteComponent implements OnInit {
       this.dataService.update('tipocliente', elem.id, elem).subscribe(
         resp => {
           this.dataService.getAll('tipocliente').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );
@@ -52,7 +52,7 @@ export class TipoClienteComponent implements OnInit {
       this.dataService.set('tipocliente', elem).subscribe(
         resp => {
           this.dataService.getAll('tipocliente').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );

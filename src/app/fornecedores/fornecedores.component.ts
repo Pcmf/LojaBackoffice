@@ -12,7 +12,7 @@ export class FornecedoresComponent implements OnInit {
   constructor(private dataService: DadosService) {
     this.dataService.getAll('fornecedores').subscribe(
       (resp: any) => {
-          this.elementos = resp.json();
+          this.elementos = resp;
       }
     );
   }
@@ -31,7 +31,7 @@ export class FornecedoresComponent implements OnInit {
       this.dataService.update('fornecedores', elem.id, elem).subscribe(
         resp => {
           this.dataService.getAll('fornecedores').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );
@@ -40,7 +40,7 @@ export class FornecedoresComponent implements OnInit {
       this.dataService.set('fornecedores', elem).subscribe(
         resp => {
           this.dataService.getAll('fornecedores').subscribe(
-            respd => this.elementos = respd.json()
+            respd => this.elementos = respd
           );
         }
       );
@@ -51,7 +51,7 @@ export class FornecedoresComponent implements OnInit {
     this.dataService.delete('fornecedores', elem.id).subscribe(
       resp => {
         this.dataService.getAll('fornecedores').subscribe(
-          respd => this.elementos = respd.json()
+          respd => this.elementos = respd
         );
       }
     );

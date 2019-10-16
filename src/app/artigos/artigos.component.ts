@@ -25,25 +25,25 @@ export class ArtigosComponent {
   constructor(private dataService: DadosService) {
     this.dataService.getAll('artigos').subscribe(
       (resp: any) => {
-          this.elementos = resp.json();
+          this.elementos = resp;
       }
     );
       // familias
       this.dataService.getAll('familias').subscribe(
-        resp => this.familias = resp.json()
+        (resp: any) => this.familias = resp
       );
 
       // categorias
       this.dataService.getAll('categorias').subscribe(
-        resp => this.categorias = resp.json()
+        (resp: any) => this.categorias = resp
       );
       // fornecedores
       this.dataService.getAll('fornecedores').subscribe(
-        resp => this.fornecedores = resp.json()
+        (resp: any) => this.fornecedores = resp
       );
       // composicoes
       this.dataService.getAll('composicoes').subscribe(
-        resp => this.composicoes = resp.json()
+        (resp: any) => this.composicoes = resp
       );
   }
 
@@ -94,7 +94,7 @@ export class ArtigosComponent {
         resp => {
           this.dataService.getAll('artigos').subscribe(
             respd => {
-              this.elementos = respd.json();
+              this.elementos = respd;
               this.elem = {};
             }
           );
@@ -107,7 +107,7 @@ export class ArtigosComponent {
         resp => {
           this.dataService.getAll('artigos').subscribe(
             respd => {
-              this.elementos = respd.json();
+              this.elementos = respd;
               this.elem = {};
             }
           );
@@ -119,14 +119,14 @@ export class ArtigosComponent {
   stock (artigo) {
     this.elem = artigo;
     this.dataService.getOne('stock', artigo.id).subscribe(
-      resp => this.stocks = resp.json()
+      resp => this.stocks = resp
     );
   }
 
   fotos (artigo) {
     this.elem = artigo;
     this.dataService.getOne('fotos', artigo.id).subscribe(
-      resp => this.fotos = resp.json()
+      (resp: any) => this.fotos = resp
     );
   }
 
@@ -139,7 +139,7 @@ export class ArtigosComponent {
       resp => {
         this.dataService.getAll('artigos').subscribe(
           respd => {
-            this.elementos = respd.json();
+            this.elementos = respd;
             this.artigoModal = {};
           }
         );
